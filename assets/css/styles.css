@@ -1,0 +1,304 @@
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,700,900");
+
+.navBar {    
+    background-color: rgb(56, 56, 56);     
+    height: 40px;           
+}
+
+ul {
+    list-style-type: none;
+    margin-left: 50px;
+    padding: 0;
+    overflow: hidden;
+}
+
+li {
+    display: inline;
+    margin-right: 10px;    
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    font-family: "Source Sans Pro", Helvetica, sans-serif;   
+    font-weight: 300; 
+    font-size: 1.2em;
+    line-height: 40px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.active a
+{
+    background-color: #04aa6d;       
+}
+
+body {
+    background-color: rgb(255, 252, 243); 
+}
+
+h1 {
+    color: rgb(127, 127, 255);
+    font-family: "Source Sans Pro", Helvetica, sans-serif;
+    font-weight: 700;    
+    line-height: 0.5;    
+}
+
+h2 {
+    font-family: "Source Sans Pro", Helvetica, sans-serif;
+    font-weight: 700;    
+}
+
+h4 {
+    color: black;            
+    font-family: "Source Sans Pro", Helvetica, sans-serif;
+    font-weight: 300;
+    line-height: 0.1;    
+}
+
+.titleFormat {
+    padding: 50px;    
+}
+
+.contentFormat {    
+    width: 80%;
+    margin: auto;    
+    padding-bottom: 5em;
+    background-color: white;
+}
+
+.tiles {
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    -moz-flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    position: relative;  
+    margin: 0 0 0 -0.5em;  
+}
+
+    .tiles article {
+        -moz-transition: -moz-transform 0.5s ease, opacity 0.5s ease;
+        -webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+        -ms-transition: -ms-transform 0.5s ease, opacity 0.5s ease;
+        transition: transform 0.5s ease, opacity 0.5s ease;
+        position: relative;
+        width: calc(33.33333% - 2.5em);
+        margin: 2.5em 0 0 2.0em;
+    }
+
+        .tiles article > .image {
+            -moz-transition: -moz-transform 0.5s ease;
+            -webkit-transition: -webkit-transform 0.5s ease;
+            -ms-transition: -ms-transform 0.5s ease;
+            transition: transform 0.5s ease;
+            position: relative;
+            display: block;
+            width: 100%;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .tiles article > .image img {
+            display: block;
+            width: 100%;
+        }
+
+        .tiles article > .image:before {
+            pointer-events: none;
+            -moz-transition: background-color 0.5s ease, opacity 0.5s ease;
+            -webkit-transition: background-color 0.5s ease, opacity 0.5s ease;
+            -ms-transition: background-color 0.5s ease, opacity 0.5s ease;
+            transition: background-color 0.5s ease, opacity 0.5s ease;
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 1.0;
+            z-index: 1;
+            opacity: 0.8;
+        }
+
+        .tiles article > .image:after {
+            pointer-events: none;
+            -moz-transition: opacity 0.5s ease;
+            -webkit-transition: opacity 0.5s ease;
+            -ms-transition: opacity 0.5s ease;
+            transition: opacity 0.5s ease;
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;            
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            opacity: 0.25;
+            z-index: 2;
+        }
+
+    .tiles article > a {
+        display: -moz-flex;
+        display: -webkit-flex;
+        display: -ms-flex;
+        display: flex;
+        -moz-flex-direction: column;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -moz-align-items: center;
+        -webkit-align-items: center;
+        -ms-align-items: center;
+        align-items: center;
+        -moz-justify-content: center;
+        -webkit-justify-content: center;
+        -ms-justify-content: center;
+        justify-content: center;
+        -moz-transition: background-color 0.5s ease, -moz-transform 0.5s ease;
+        -webkit-transition: background-color 0.5s ease, -webkit-transform 0.5s ease;
+        -ms-transition: background-color 0.5s ease, -ms-transform 0.5s ease;
+        transition: background-color 0.5s ease, transform 0.5s ease;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding: 0em;
+        border-radius: 4px;
+        border-bottom: 0;
+        color: #ffffff;
+        text-align: center;
+        text-decoration: none;
+        z-index: 3;
+    }
+
+        .tiles article > a > :last-child {
+            margin: 0;
+        }
+
+        .tiles article > a:hover {
+            color: #ffffff !important;
+        }
+
+        .tiles article > a h2 {
+            margin: 0;
+        }
+
+    .tiles article > a .content {
+        -moz-transition: max-height 0.5s ease, opacity 0.5s ease;
+        -webkit-transition: max-height 0.5s ease, opacity 0.5s ease;
+        -ms-transition: max-height 0.5s ease, opacity 0.5s ease;
+        transition: max-height 0.5s ease, opacity 0.5s ease;
+        width: 90%;
+        max-height: 0;
+        line-height: 1.5;
+        margin-top: 0.35em;
+        opacity: 0;
+    }
+
+        .tiles article > a .content > :last-child {
+            margin-bottom: 0;
+        }
+    
+
+    body:not(.is-touch) .tiles article:hover > .image {
+        -moz-transform: scale(1.1);
+        -webkit-transform: scale(1.1);
+        -ms-transform: scale(1.1);
+        transform: scale(1.1);
+    }
+
+        body:not(.is-touch) .tiles article:hover > .image:before {
+            background-color: #333333;
+            opacity: 0.35;
+        }
+
+        body:not(.is-touch) .tiles article:hover > .image:after {
+            opacity: 0;
+        }
+
+    body:not(.is-touch) .tiles article:hover .content {
+        max-height: 15em;
+        opacity: 1;
+    }
+
+* {box-sizing: border-box;}
+
+.slideshow-container {
+    max-width: 1000px;    
+    position: relative;
+    margin: auto;
+}
+
+.mySlides {
+    display: none;
+}
+
+.mySlides img {
+    width: 100%;
+}
+
+.dot {
+    cursor: pointer;
+    height: 8px;
+    width: 8px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+
+.dot:hover {
+    background-color: #717171;
+}
+
+.active {
+    background-color: #047baa;
+}
+
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+}
+
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+.navigationDots {
+    text-align: center;
+}
+
+@keyframes fade {
+    from {opacity: 0.4;}
+    to {opacity: 1;}
+}
