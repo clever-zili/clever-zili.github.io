@@ -10,45 +10,63 @@
 <body>		
 	<div class="contentFormat">		
 		<div id="main">
-			<div class="inner">
+			<header id="header">
+				<a href="../index.html" class="logo">
+					<span class="symbol"><img src="../images/logo.png" alt=""></span>
+				</a>
+			</header>
+
+			<div class="inner">				
 				<p>Battle draughts is a checkers-based game with different types of pieces, each one with a unique special ability.</p>
 
 				<div class="slideshow-container">
-					<div class="mySlides fade">
-						<img src="../images/battledraughts/phoneprints01.jpg" alt="Slide 1">
-					</div>
-					<div class="mySlides fade">
-						<img src="../images/battledraughts/phoneprints02.jpg" alt="Slide 2">
-					</div>
-					<div class="mySlides fade">
-						<img src="../images/battledraughts/phoneprints03.jpg" alt="Slide 3">
-					</div>
-					<div class="mySlides fade">
-						<img src="../images/battledraughts/phoneprints04.jpg" alt="Slide 4">
-					</div>
-					<div class="mySlides fade">
-						<img src="../images/battledraughts/phoneprints05.jpg" alt="Slide 5">
+					<s id="s1"></s>
+					<s id="s2"></s>
+					<s id="s3"></s>
+					<s id="s4"></s>
+					<s id="s5"></s>
+
+					<div class="slider">
+						<div>
+							<img class="center-fit" src="../images/battledraughts/phoneprints01.jpg" alt="Slide 1">
+						</div>
+						<div>
+							<img class="center-fit" src="../images/battledraughts/phoneprints02.jpg" alt="Slide 2">
+						</div>
+						<div>
+							<img class="center-fit" src="../images/battledraughts/phoneprints03.jpg" alt="Slide 3">
+						</div>
+						<div>
+							<img class="center-fit" src="../images/battledraughts/phoneprints04.jpg" alt="Slide 4">
+						</div>
+						<div>
+							<img class="center-fit" src="../images/battledraughts/phoneprints05.jpg" alt="Slide 5">
+						</div>
 					</div>
 
-					<a class="prev" onclick="changeSlide(-1)">&#10094;</a>
-					<a class="next" onclick="changeSlide(1)">&#10095;</a>
-				</div>
-				<div class="navigationDots">
-					<span class="dot" onClick="currentSlide(1)"></span>
-					<span class="dot" onClick="currentSlide(2)"></span>
-					<span class="dot" onClick="currentSlide(3)"></span>
-					<span class="dot" onClick="currentSlide(4)"></span>
-					<span class="dot" onClick="currentSlide(5)"></span>
-				</div>
+					<div class="prevNext">
+						<div><a href="#s5">&#10094;</a><a href="#s2">&#10095;</a></div>
+						<div><a href="#s1">&#10094;</a><a href="#s3">&#10095;</a></div>
+						<div><a href="#s2">&#10094;</a><a href="#s4">&#10095;</a></div>
+						<div><a href="#s3">&#10094;</a><a href="#s5">&#10095;</a></div>
+						<div><a href="#s4">&#10094;</a><a href="#s1">&#10095;</a></div>
+					</div>
 
+					<div class="bullets">
+						<a href="#s1"></a>
+						<a href="#s2"></a>
+						<a href="#s3"></a>
+						<a href="#s4"></a>
+						<a href="#s5"></a>
+					</div>
+				</div>
+				
 				<p>The pieces, and their abilities, are:</p>
-				<p>–<strong>Knight</strong>: his ability is a sword slash that hits any selected enemy unit within one square range.<br>–<strong>Archer</strong>: shoots an arrow at any selected enemy unit at two non-diagonal squares from the archer.<br>–<strong>Mage</strong>: can create a copy of an allied piece in a selected position.</p>
+				<p>&#8226; <strong>Knight</strong>: his ability is a sword slash that hits any selected enemy unit within one square range.<br>&#8226; <strong>Archer</strong>: shoots an arrow at any selected enemy unit at two non-diagonal squares from the archer.<br>&#8226; <strong>Mage</strong>: can create a copy of an allied piece in a selected position.</p>
 				<p>Those abilities get active when a piece performs a capture move.</p>
 				<p>The game has a single-player mode, with three levels of difficulty, or a local multiplayer.</p>		
 			</div>
 		</div>
-	</div>
-
-	<script src="../assets/js/slideshow.js"></script>
+	</div>	
 </body>
 </html>

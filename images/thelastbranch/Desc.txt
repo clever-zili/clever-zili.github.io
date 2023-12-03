@@ -1,1 +1,0 @@
-A 2D platform game where the player controls a sprout character in a quest to find a way to save his land. Through the roots of old trees, they can access new skills that will help them through this journey.
