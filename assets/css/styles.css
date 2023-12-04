@@ -5,16 +5,20 @@
     height: 40px;
 }
 
-ul {
+.navBar ul {
     list-style-type: none;
     margin-left: 50px;
     padding: 0;
     overflow: hidden;
 }
 
-li {
+.navBar li {
     display: inline;
     margin-right: 10px;    
+}
+
+.navBar li a:hover:not(.active a) {
+    background-color: #111111;
 }
 
 a {
@@ -412,4 +416,22 @@ iframe {
     margin: 0 3px;
     color: rgba(0, 0, 0, 0.8);
     text-decoration: none;
+}
+
+.ref-links {    
+    display: block;
+    width: 40%;
+    margin-left: 3em;
+}
+
+.ref-links li {
+    display: inline;    
+}
+
+.ref-links a {
+    padding: 4px;
+}
+
+.ref-links img {
+    width: 10%;        
 }
