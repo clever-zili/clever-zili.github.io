@@ -11,54 +11,226 @@
 	<div class="contentFormat">		
 		<div id="main">
 			<header id="header">
-				<a href="../index.html" class="logo">
+				<a href="../articles.html" class="logo">
 					<span class="symbol"><img src="../images/logoArticle.png" alt=""></span>
 				</a>
 			</header>
 
-			<div class="inner">				
-				<p>The Journey of Graciosa tells the story of a group of explorers called to cross, for the first time, the Paran&aacute;'s Mountain to take the letter of emancipation from the city of Curitiba to the port of Paranagu&aacute;. This journey will be full of exploration, dangers and self knowledge.</p>
-
-				<div class="slideshow-container">
-					<s id="s1"></s>
-					<s id="s2"></s>
-					<s id="s3"></s>
-					<s id="s4"></s>					
-
-					<div class="slider">
-						<div>
-							<img class="center-fit" src="../images/ajornadadagraciosa/graciosa01.jpg" alt="Slide 1">
-						</div>
-						<div>
-							<img class="center-fit" src="../images/ajornadadagraciosa/graciosa02.jpg" alt="Slide 2">
-						</div>
-						<div>
-							<img class="center-fit" src="../images/ajornadadagraciosa/graciosa03.jpg" alt="Slide 3">
-						</div>
-						<div>
-							<img class="center-fit" src="../images/ajornadadagraciosa/graciosa04.jpg" alt="Slide 4">
-						</div>						
-					</div>
-
-					<div class="prevNext">
-						<div><a href="#s4">&#10094;</a><a href="#s2">&#10095;</a></div>
-						<div><a href="#s1">&#10094;</a><a href="#s3">&#10095;</a></div>
-						<div><a href="#s2">&#10094;</a><a href="#s4">&#10095;</a></div>
-						<div><a href="#s3">&#10094;</a><a href="#s1">&#10095;</a></div>						
-					</div>
-
-					<div class="bullets">
-						<a href="#s1"></a>
-						<a href="#s2"></a>
-						<a href="#s3"></a>
-						<a href="#s4"></a>						
-					</div>
+            <div class="inner">
+                <h2><br>Combat Selection Tool</h2>
+				<p>Custom inspector, not only visual but a usability matter. A study of how an inspector customization eased the understand and use of a combat selection tool in the game A Jornada da Graciosa.</p>
+                <h3>Introduction</h3>
+				<p>Hi, my name is Cleverton Zili. I work as a Unity game programmer since 2014. In my spare time, I work with friends in our independent team, creating games and applications.</p>
+                <p>Our last published game is called A Jornada da Graciosa. It is a survivor/adventure game with turn-based combats where the player needs to find his way through the closed forest to reach the coast.</p>                    
+                <p>In this project, we used ScriptableObjects as data containers for many objects, like the system responsible for the selection of the enemy's combat groups. In this article, I will explain how we built this selection system step by step. The project assets are all available <a class="text-links" href="https://bitbucket.org/ClevertonProjects/customscriptableobject/src/master/"><u>here</u></a>.</p>
+				<h3>Combat Selection System</h3>
+				<p>The selection of the enemies created in the combat followed this structure:</p>
+				<ul>
+					<li><p>Each enemy has a reference to a ScriptableObject called Combat Groups (CG);</p></li>
+					<li><p>The object CG has the data of the characters that can be selected to enter in the combat;</p></li>
+					<li><p>These groups have difficulty categories and a weight value used as a combat selection parameter;</p></li>
+					<li><p>Each character's configuration values are accessible from the CG object inspector.</p></li>
+				</ul>
+				<p>More visually, this is the structure described above.</p>
+				<div class="center-img">
+					<img src="../images/combatselectiontool/estruturacombate_en-1.jpg"/>
 				</div>
-				
-				<p>This is a survivor/adventure game with turn-based combats where the player needs to find his way through the closed forest to reach the coast.</p>					
-				<iframe width="700" height="394" src="https://www.youtube.com/embed/koWFJf7nGzE?controls=1"></iframe>
-			</div>
-		</div>
+				<p>Let's start with the character's values. For this example, I created four variables: type, life amount, initiative, and attacks.</p>
+				<pre><code>[System.Serializable] 
+public struct EnemyParameters 
+{     
+	public EnemyTypes EnemyType;
+	public int LifeAmount;
+	public int Initiative;
+	public AiAttackBehavior AiBehavior;    
+}				</code></pre>
+				<p>The EnemyType variable is an enum containing all the enemies' types in the game. The AiBehavior variable is a ScriptableObject which controls a character's attack data (how to select an attack and their targets).</p>
+				<pre><code>[System.Serializable] 
+public struct EnemyData 
+{     
+    public bool UseDefaultValues;
+    public EnemyParameters Parameters;
+}				</code></pre>
+				<p>The character's structure data has a boolean parameter, used to trigger the use of default values.</p>
+				<h3>Enemies' Groups</h3>
+				<p>Each enemy group has a weight parameter, used to find the appropriate combat for the player.</p>
+				<pre><code>[System.Serializable] 
+public class CombatGroups 
+{
+    public EnemyData[] CombatLineUp;
+    public int CombatWeight;
+    public bool IsEditorPanelVisible;    
+}				</code></pre>
+				<p>The IsEditorPanelVisible variable has a foldout purpose in the editor customization.</p>
+				<h3>Combat Groups</h3>
+				<p>The combat group object has all the data necessary to select an enemy's combat.</p>
+				<pre><code>public class LevelCombatOptions : ScriptableObject
+{	   
+	public float EasyCombatChance;
+	public float NormalCombatChance;
+	public float HardCombatChance;
+	
+	public EnemiesBaseStatus DefaultStatus;
+	public CombatGroups[] EasyCombats;	
+	public CombatGroups[] NormalCombats;	
+	public CombatGroups[] HardCombats;
+}				</code></pre>
+				<p>The DefaultStatus variable is a ScriptableObject containing default values of all enemy's parameters.<br>Now with the object structure completed, we can see how it looks like in the editor.</p>
+				<div class="center-img">
+					<img src="../images/combatselectiontool/defaultobjectinspector.jpg"/>
+				</div>
+				<p>It doesn't look pretty good, especially for those who are going to use it.</p>
+				<h3>Editor Customization</h3>
+				<p>Starting with the enemies' parameters data, we can group them inside a panel and use the variable UseDefaultValues to show these fields only when necessary.</p>
+				<div class="center-img">
+					<img src="../images/combatselectiontool/customenemyinspector.jpg"/>
+				</div>
+				<p>In the code, I created a serialized variable for each parameter and, as said above, draw them in the editor only when the user wants to access them. For the rectangle panel, I used unity's button layout (EditorGUILayout.BeginVertical("button")).</p>
+				<pre><code>private void DrawEnemyData (SerializedProperty combatGroup, int enemyIndex) 
+{
+	SerializedProperty enemyData = combatGroup.GetArrayElementAtIndex(enemyIndex);
+	SerializedProperty enemyParameters = enemyData.FindPropertyRelative("Parameters");
+	SerializedProperty isDefaultValues = enemyData.FindPropertyRelative("UseDefaultValues");
+	SerializedProperty enemyType = enemyParameters.FindPropertyRelative("EnemyType");
+	SerializedProperty lifeAmount = enemyParameters.FindPropertyRelative("LifeAmount");
+	SerializedProperty aiBehavior = enemyParameters.FindPropertyRelative("AiBehavior");
+	SerializedProperty initiative = enemyParameters.FindPropertyRelative("Initiative");
+
+	EditorGUILayout.BeginVertical("button");
+
+	EditorGUILayout.PropertyField(enemyType);
+	EditorGUILayout.PropertyField(isDefaultValues);
+
+	if (isDefaultValues.boolValue)
+	{
+		int enemyTypeIndex = enemyType.enumValueIndex;
+
+		lifeAmount.intValue = myTarget.DefaultStatus.EnemyParameters[enemyTypeIndex].LifeAmount;
+		initiative.intValue = myTarget.DefaultStatus.EnemyParameters[enemyTypeIndex].Initiative;
+		aiBehavior.objectReferenceValue = myTarget.DefaultStatus.EnemyParameters[enemyTypeIndex].AiBehavior;
+	}
+	else
+	{
+		EditorGUILayout.PropertyField(lifeAmount);
+		EditorGUILayout.ObjectField(aiBehavior);
+		EditorGUILayout.PropertyField(initiative);
+	}
+
+	EditorGUILayout.EndVertical();
+}				</code></pre>
+				<p>The groups can have multiple enemies, making it difficult to read. To reduce the amount of space in the editor, I made it retractable. To make it easy to associate the enemies with the group, I draw them inside a rectangle delimiting the group's extends.</p>
+				<div class="center-img">
+					<img src="../images/combatselectiontool/combatgroup.jpg"/>
+				</div>
+				<p>An important detail here, before changing the GUI color, it is a good practice to save the original color and restore it when you finished using it.</p>
+				<pre><code>if (showPanel)
+{
+	DrawArraySizeProperty("Created Groups", serializedProperty);
+	Color oldColor = GUI.backgroundColor;
+
+	for (int i = 0; i &#60; serializedProperty.arraySize; i++)
+	{
+		GUI.backgroundColor = new Color(1f, 0.996f, 0.894f);
+		SerializedProperty lineUp = serializedProperty.GetArrayElementAtIndex(i);
+		SerializedProperty combatGroups = lineUp.FindPropertyRelative("CombatLineUp");
+
+		EditorGUILayout.BeginVertical("box");
+		EditorGUILayout.BeginHorizontal();
+
+		SerializedProperty panelVisibilityProperty = serializedProperty.GetArrayElementAtIndex(i).FindPropertyRelative("IsEditorPanelVisible");
+		panelVisibilityProperty.boolValue = EditorGUILayout.Foldout(panelVisibilityProperty.boolValue, groupsTitle + i);
+
+		EditorGUILayout.EndHorizontal();
+
+		if (panelVisibilityProperty.boolValue)
+		{
+			SerializedProperty weightProperty = lineUp.FindPropertyRelative("CombatWeight");
+			EditorGUILayout.PropertyField(weightProperty);
+
+			DrawArraySizeProperty("Enemies Amount", combatGroups);
+			GUI.backgroundColor = new Color(0.937f, 0.933f, 1f);
+
+			for (int j = 0; j &#60; combatGroups.arraySize; j++)
+			{
+				DrawEnemyData(combatGroups, j);
+			}
+		}
+
+		EditorGUILayout.EndVertical();
+	}
+
+	GUI.backgroundColor = oldColor;
+}				</code></pre>
+				<p>I draw the group's parameters only when the user chooses to use custom values.<br>The group foldout part is pretty simple.</p>
+				<pre><code>private void DrawCombatPanel (SerializedProperty serializedProperty, string groupTitle, ref bool showPanel)
+{
+	EditorGUILayout.BeginVertical("textfield");
+
+	EditorGUILayout.BeginHorizontal();
+	EditorGUI.indentLevel += 1;
+	showPanel = EditorGUILayout.Foldout(showPanel, groupTitle);
+	EditorGUILayout.EndHorizontal();
+
+	if (showPanel)
+	{
+		...
+	}
+
+	EditorGUILayout.EndVertical();
+	EditorGUI.indentLevel -= 1; 
+}				</code></pre>
+				<p>At last, to wrap things up, the general info (difficulty chances, groups per difficulty, and default values). The fields for the combat difficulty chances were aligned horizontally and grouped in a panel to occupy the minimum space necessary.</p>
+				<div class="center-img">
+					<img src="../images/combatselectiontool/combatencounter.jpg"/>
+				</div>
+				<p>The groups inside each difficulty also use a foldout layout.<br>The titles of the combat difficulty chances variables were an editor label drawn above their value fields.</p>
+				<pre><code>private void CombatDificultyChances () 
+{
+	defaultStats = mySerializedObject.FindProperty("DefaultStatus");
+
+	SerializedProperty easyCombatChance = mySerializedObject.FindProperty("EasyCombatChance");
+	SerializedProperty normalCombatChance = mySerializedObject.FindProperty("NormalCombatChance");
+	SerializedProperty hardCombatChance = mySerializedObject.FindProperty("HardCombatChance");
+
+	EditorGUILayout.ObjectField(defaultStats);
+	EditorGUILayout.Space();
+
+	EditorGUILayout.BeginVertical("Box");
+
+	EditorGUILayout.LabelField("Difficulty Chances", titleStyle);
+	EditorGUILayout.BeginHorizontal();
+
+	EditorGUILayout.BeginVertical();
+	EditorGUILayout.LabelField("Easy", GUILayout.Width(100f));
+	EditorGUILayout.PropertyField(easyCombatChance, GUIContent.none);    
+	EditorGUILayout.EndVertical();
+
+	EditorGUILayout.BeginVertical();
+	EditorGUILayout.LabelField("Normal", GUILayout.Width(100f));
+	EditorGUILayout.PropertyField(normalCombatChance, GUIContent.none);
+	EditorGUILayout.EndVertical();
+
+	EditorGUILayout.BeginVertical();
+	EditorGUILayout.LabelField("Hard", GUILayout.Width(100f));
+	EditorGUILayout.PropertyField(hardCombatChance, GUIContent.none);             
+	EditorGUILayout.EndVertical();
+
+	EditorGUILayout.EndHorizontal();
+	EditorGUILayout.EndVertical();
+}				</code></pre>
+				<h3>Conclusion</h3>
+				<p>The result was an object inspector more intuitive and organized.</p>
+				<div class="center-img">
+					<img src="../images/combatselectiontool/comparison.jpg"/>
+				</div>
+				<p>Comparing both versions, it is worth noting the amount of information visible on the screen in the edited version of the combat encounters object. Another problem with the default inspector is the generic field's names, like Element x or Size, which is valid for a few variables, but in this case, they only make the balancing more confuse. The panel groups and the foldout menus allowed to keep visible only the information needed during the process of creation or balancing. Of course, this object is specific for this case, but the ideas presented here can be used in many projects.</p>
+				<p>I presented here a little of my experience with ScriptableObjects during the development of the game A Jornada da Graciosa. There's a lot of improvements that can be done, like using the enemy's data as a reorderable list or change the combat difficulty chances to look like the unity's shadow cascade panel.</p>
+				<div class="center-img">
+					<img src="../images/combatselectiontool/improvements.jpg"/>
+				</div>
+				<p>This project is available to download, so feel free to learn, change, or enhance it.</p>
+            </div>
+        </div>
 	</div>	
 </body>
 </html>
