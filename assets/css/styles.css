@@ -420,6 +420,7 @@ iframe {
 #s3:target ~ .bullets >*:nth-child(3) {background: rgba(255, 255, 255, 1);}
 #s4:target ~ .bullets >*:nth-child(4) {background: rgba(255, 255, 255, 1);}
 #s5:target ~ .bullets >*:nth-child(5) {background: rgba(255, 255, 255, 1);}
+#s6:target ~ .bullets >*:nth-child(6) {background: rgba(255, 255, 255, 1);}
 
 .slideshow-container >s:target ~ .prevNext >* { visibility: hidden; }
 #s1:target ~ .prevNext >*:nth-child(1) { visibility: visible; }
@@ -427,12 +428,14 @@ iframe {
 #s3:target ~ .prevNext >*:nth-child(3) { visibility: visible; }
 #s4:target ~ .prevNext >*:nth-child(4) { visibility: visible; }
 #s5:target ~ .prevNext >*:nth-child(5) { visibility: visible; }
+#s6:target ~ .prevNext >*:nth-child(6) { visibility: visible; }
 
 #s1:target ~ .slider { transform: translateX(0%); -webkit-transform: translateX(0%); }
 #s2:target ~ .slider { transform: translateX(-100%); -webkit-transform: translateX(-100%); }
 #s3:target ~ .slider { transform: translateX(-200%); -webkit-transform: translateX(-200%); }
 #s4:target ~ .slider { transform: translateX(-300%); -webkit-transform: translateX(-300%); }
 #s5:target ~ .slider { transform: translateX(-400%); -webkit-transform: translateX(-400%); }
+#s6:target ~ .slider { transform: translateX(-500%); -webkit-transform: translateX(-500%); }
 
 .slideshow-container {
     color:#fff;
